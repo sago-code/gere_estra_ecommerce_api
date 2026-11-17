@@ -35,4 +35,9 @@ export class CatalogosController {
   ) {
     return this.service.getClientes(limit ?? 100, offset ?? 0);
   }
+
+  @Get('ciudades')
+  getCiudades() {
+    return this.service.getCiudades();
+  }
 }

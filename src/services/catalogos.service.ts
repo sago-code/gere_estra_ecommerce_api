@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CategoriaEntity } from '../repository/entities/categoria.entity.js';
 import { ClienteEntity } from '../repository/entities/cliente.entity.js';
+import { CiudadEntity } from '../repository/entities/ciudad.entity.js';
 import { EstadoPedidoEntity } from '../repository/entities/estado-pedido.entity.js';
 import { MetodoPagoEntity } from '../repository/entities/metodo-pago.entity.js';
 import { ProductoEntity } from '../repository/entities/producto.entity.js';
@@ -20,6 +21,8 @@ export class CatalogosService {
     private readonly metodoRepo: Repository<MetodoPagoEntity>,
     @InjectRepository(ClienteEntity)
     private readonly clienteRepo: Repository<ClienteEntity>,
+    @InjectRepository(CiudadEntity)
+    private readonly ciudadRepo: Repository<CiudadEntity>,
   ) {}
 
   async getProductos(limit = 100, offset = 0) {
@@ -52,5 +55,9 @@ export class CatalogosService {
       skip: offset,
     });
     return { items, total, limit, offset };
+  }
+
+  async getCiudades() {
+    return this.ciudadRepo.find({ order: { nombre: 'ASC' } });
   }
 }
